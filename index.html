@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Zenefits Challenge</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+		
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+				<!-- Nav -->
+				<div class="col-xs-12">
+				<!-- Main -->
+				<div class="col-xs-12 textcenter">
+					<div class=" col-xs-12 text-center mainBox">
+							
+						<h2 id="question">What would you like?</h2><br>
+						
+					    <input type="text" id="textBox" autofocus="autofocus"><br>
+					    <!-- <button type="submit" id="submitBtn" class="btn btn-default btn-large">Submit</button> -->
+
+					    <div class="results">
+
+					    </div>
+					</div>
+								 
+								  
+								
+						
+
+					</div>
+				</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script>
+				$('#submitBtn').on('click', function (){
+					submitForm();
+				});
+				
+				var map = new google.maps.Map(document.createElement('div'))
+				var service = new google.maps.places.PlacesService(map);
+				var callback = function(data) {
+					for (var i = 0; i < 10; i++) {
+					    
+					    $('.results').append('<p>'+data[i].name+'</p>');
+					    console.log(data[i].name)
+					    
+					}
+					data.length=0;
+					console.log(data);
+				}
+				//Autofocus to the textbox
+				if (!("autofocus" in document.createElement("input"))) {
+				    $("#textBox").focus();
+				}
+				function submitForm(){
+
+					var request = {
+						query: $('#textBox').val()
+					}
+					service.textSearch(request, callback);
+
+				}
+				//Enter function
+				$("input").keypress(function(event) {
+				    if (event.which == 13) {
+				        event.preventDefault();
+				        //*****ASK GABE
+				        submitForm();
+				    }
+				});
+
+				function callback(results, status) {
+				  if (status == google.maps.places.PlacesServiceStatus.OK) {
+				    for (var i = 0; i < results.length; i++) {
+				      var place = results[i];
+				      createMarker(results[i]);
+				    }
+				  }
+				}
+
+			</script>
+	</body>
+</html>
