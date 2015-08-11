@@ -25,10 +25,17 @@
 						
 					    <input type="text" id="textBox" autofocus="autofocus"><br>
 					    <!-- <button type="submit" id="submitBtn" class="btn btn-default btn-large">Submit</button> -->
+					    <div class="col-xs-4">
+						    <div class="resultName">
 
-					    <div class="results">
+						    </div>
+					   	</div>
+					   	 <div class="col-xs-4">
+						    <div class="resultRating">
 
-					    </div>
+						    </div>
+					   	</div>
+
 					</div>
 								 
 								  
@@ -40,54 +47,7 @@
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
+      <script src="assets/js/main.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script>
-				$('#submitBtn').on('click', function (){
-					submitForm();
-				});
-				
-				var map = new google.maps.Map(document.createElement('div'))
-				var service = new google.maps.places.PlacesService(map);
-				var callback = function(data) {
-					for (var i = 0; i < 10; i++) {
-					    
-					    $('.results').append('<p>'+data[i].name+'</p>');
-					    console.log(data[i].name)
-					    
-					}
-					data.length=0;
-					console.log(data);
-				}
-				//Autofocus to the textbox
-				if (!("autofocus" in document.createElement("input"))) {
-				    $("#textBox").focus();
-				}
-				function submitForm(){
-
-					var request = {
-						query: $('#textBox').val()
-					}
-					service.textSearch(request, callback);
-
-				}
-				//Enter function
-				$("input").keypress(function(event) {
-				    if (event.which == 13) {
-				        event.preventDefault();
-				        //*****ASK GABE
-				        submitForm();
-				    }
-				});
-
-				function callback(results, status) {
-				  if (status == google.maps.places.PlacesServiceStatus.OK) {
-				    for (var i = 0; i < results.length; i++) {
-				      var place = results[i];
-				      createMarker(results[i]);
-				    }
-				  }
-				}
-
-			</script>
 	</body>
 </html>
