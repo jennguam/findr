@@ -56,12 +56,23 @@ $( "#mainForm" ).submit(function( event ) {
   
   if (navigator.geolocation) {
   console.log('Geolocation is supported!');
+<<<<<<< HEAD
     }
     else {
       console.log('Geolocation is not supported for this Browser/OS version yet.');
     }
 
 
+=======
+}
+else {
+  console.log('Geolocation is not supported for this Browser/OS version yet.');
+}
+
+$(function() {
+  navigator.geolocation.getCurrentPosition(function(data) {console.log(data)}, function(error) {console.error(error)});
+});
+>>>>>>> fd297ce1f2d057a6757bc4c42dda2e94f4237adb
 
 // window.onload = function() {
 //   var startPos;
