@@ -35,7 +35,7 @@ body {
         -webkit-transform: translateY(-20px); 
     } 
     100% { 
-        opacity: 1.5; 
+        opacity: 1; 
         -webkit-transform: translateY(0); 
     } 
 } 
@@ -46,7 +46,7 @@ body {
         transform: translateY(-20px); 
     } 
     100% { 
-        opacity: 1.5; 
+        opacity: 1; 
         transform: translateY(0); 
     } 
 } 
@@ -63,9 +63,12 @@ body {
 #rating{
   margin-left: 20px;
 }	
-
+#locationBox{
+  width: 50%;
+}
 
 .mainBox{
+
   margin: 0 auto;
   padding: 20px;
   display: flex;
@@ -123,8 +126,8 @@ input[type=text]{
 	z-index: 2;
   width: 75%;
   float:left;
-  -webkit-animation-duration: 1s; 
-    animation-duration: 1s; 
+  -webkit-animation-duration: 1.5s; 
+    animation-duration: 1.5s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 }
@@ -138,8 +141,8 @@ input[type=text]{
 	color: #FFF;
 	font-size: 42px;
 	padding: 20px;
-   -webkit-animation-duration: 1s; 
-    animation-duration: 1s; 
+   -webkit-animation-duration: 1.5s; 
+    animation-duration: 1.5s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 

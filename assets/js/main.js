@@ -1,5 +1,6 @@
 $('#submitBtn').on('click', function (){
 	submitForm();
+  
 });
 
 $( "#mainForm" ).submit(function( event ) {
@@ -30,17 +31,39 @@ $( "#mainForm" ).submit(function( event ) {
 			query: $('#textBox').val()
 		}
 		service.textSearch(request, callback);
-
+    
 	}
 	//Enter Button function
 	$("input").keypress(function(event) {
 	    if (event.which == 13) {
 	        
-	        //*****ASK GABE
+	        
 	        $('#mainForm').submit(submitForm());
           event.preventDefault();
 	    }
 	});
+  
+  if (navigator.geolocation) {
+  console.log('Geolocation is supported!');
+}
+else {
+  console.log('Geolocation is not supported for this Browser/OS version yet.');
+}
+
+$(function() {
+  navigator.geolocation.getCurrentPosition(function(data) {console.log(data)}, function(error) {console.error(error)});
+});
+
+// window.onload = function() {
+//   var startPos;
+//   var geoSuccess = function(position) {
+//     startPos = position;
+//     debugger
+//     $('#startLat').innerHTML = startPos.coords.latitude;
+//     $('#startLon').innerHTML = startPos.coords.longitude;
+//   };
+//   navigator.geolocation.getCurrentPosition(geoSuccess);
+// };
 	// if i want to include a map
 	// function callback(results, status) {
 	//   if (status == google.maps.places.PlacesServiceStatus.OK) {
