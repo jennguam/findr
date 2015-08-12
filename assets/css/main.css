@@ -13,16 +13,52 @@ body {
 	font-size: 24px;
 	font-family: 'Source Sans Pro', Helvetica, Arial;
 	color: #FFFFFF;
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-   -moz-animation: fadein 2s; /* Firefox < 16 */
-    -ms-animation: fadein 2s; /* Internet Explorer */
-     -o-animation: fadein 2s; /* Opera < 12.1 */
-        animation: fadein 2s;
+ 
+}
 
+@-webkit-keyframes fadeIn { 
+    0% {opacity: 0;} 
+    100% {opacity: 1;} 
+} 
+@keyframes fadeIn { 
+    0% {opacity: 0;} 
+    100% {opacity: 1;} 
+} 
+.fadeIn { 
+    -webkit-animation-name: fadeIn; 
+    animation-name: fadeIn; 
+}
+
+@-webkit-keyframes fadeInDown { 
+    0% { 
+        opacity: 0; 
+        -webkit-transform: translateY(-20px); 
+    } 
+    100% { 
+        opacity: 1.5; 
+        -webkit-transform: translateY(0); 
+    } 
+} 
+
+@keyframes fadeInDown { 
+    0% { 
+        opacity: 0; 
+        transform: translateY(-20px); 
+    } 
+    100% { 
+        opacity: 1.5; 
+        transform: translateY(0); 
+    } 
+} 
+
+.fadeInDown { 
+    -webkit-animation-name: fadeInDown; 
+    animation-name: fadeInDown; 
 }
 
 .results{
   text-align: left;
+  margin-top: 10px;
 }
 #rating{
   margin-left: 20px;
@@ -41,11 +77,11 @@ body {
   flex-direction: column;
 
   width: 200px;
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 2s; /* Firefox < 16 */
-        -ms-animation: fadein 2s; /* Internet Explorer */
-         -o-animation: fadein 2s; /* Opera < 12.1 */
-            animation: fadein 2s;
+  visibility: visible;
+  animation-delay: 300ms;
+  -webkit-animation-delay: 300ms;
+  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
 }
 
 /* Firefox < 16, Safari, Chrome and Opera > 12.1, 
@@ -67,13 +103,12 @@ input[type=text]{
     box-shadow: 
       inset 0 0 8px  rgba(0,0,0,0.1),
             0 0 16px rgba(0,0,0,0.1);*/ 
-    padding: 15px;
-    border-bottom-color: #FFF;
-    border-bottom-width: 5px;
-    background-color: transparent;
-    margin: 0 0 10px 0;
-    color: #FFFFFF;
-    font-size: 24px;
+  padding: 15px;
+  
+  //background-color: transparent;
+  margin: 0 0 10px 0;
+  color: #FFFFFF;
+  font-size: 24px;
 	height: 35px;
 	font-weight: 700;
 	color: #fff;
@@ -88,6 +123,10 @@ input[type=text]{
 	z-index: 2;
   width: 75%;
   float:left;
+  -webkit-animation-duration: 1s; 
+    animation-duration: 1s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
 }
 .form-inline{
   width:50%;
@@ -99,6 +138,11 @@ input[type=text]{
 	color: #FFF;
 	font-size: 42px;
 	padding: 20px;
+   -webkit-animation-duration: 1s; 
+    animation-duration: 1s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
+
 }
 input::-webkit-input-placeholder {
    color: rgba(255, 255, 255, 0.5);
@@ -112,4 +156,9 @@ input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
 #submitBtn{
   width:150px;
   margin-left:5px;
+  font-size:1.25em;
+  -webkit-animation-duration: 1s; 
+    animation-duration: 1s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
 }
