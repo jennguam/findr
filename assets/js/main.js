@@ -6,40 +6,46 @@ $('#submitBtn').on('click', function (){
 $( "#mainForm" ).submit(function( event ) {
   event.preventDefault();
 });
-				
+//Autofocus to the textbox
+if (!("autofocus" in document.createElement("input"))) {
+    $("#textBox").focus();
+}			
 	var map = new google.maps.Map(document.createElement('div'))
 	var service = new google.maps.places.PlacesService(map);
+  
 	var callback = function(data) {
-
+    $('.resultName').html("");
+    $('.resultRating').html("");
 		for (var i = 0; i < 10; i++) {
-		    
+
 		    $('.resultName').append('<span id="name">'+data[i].name+'</span><br>');
 		    $('.resultRating').append('<span id="rating">'+data[i].rating+'</span><br>');
-		    console.log(data[i].rating)
-		    
+		   
 		}
 		data.length=0;
 		console.log(data);
 	}
-	//Autofocus to the textbox
-	if (!("autofocus" in document.createElement("input"))) {
-	    $("#textBox").focus();
-	}
+  var pyrmont = new google.maps.LatLng(37.7629571, -122.46647790000002);
+
   $(function() {
       navigator.geolocation.getCurrentPosition(function(data) {
-          latitude = data["coords"]["latitude"];
-          longitude = data["coords"]["longitude"];
-          console.log(latitude+","+longitude);
-      }, function(error) {console.error(error)});
+          window.latitude = data.coords.latitude;
+          window.longitude = data.coords.longitude;
+          console.log(window.latitude);
+          console.log(window.longitude);
+          //console.log( window['coordinates']['latitude']+","+window['coordinates']['longitude']);
 
-    });
+      }, function(error) {console.error(error);$('#question').text("What would you like to eat?","Oops! We can't quite get your location.")});
+
+  });
+  
 	function submitForm(){
-    
-    
+
 		var request = {
-      location: {latitude,longitude}, 
+      location: pyrmont,
 			query: $('#textBox').val(),
-      types: ['store']
+      radius: '500',
+      types: ['restaurant'],
 		}
 		service.textSearch(request, callback);
     
@@ -47,49 +53,16 @@ $( "#mainForm" ).submit(function( event ) {
 	//Enter Button function
 	$("input").keypress(function(event) {
 	    if (event.which == 13) {
-	        
-	        
 	        $('#mainForm').submit(submitForm());
           event.preventDefault();
 	    }
 	});
   
   if (navigator.geolocation) {
-  console.log('Geolocation is supported!');
-<<<<<<< HEAD
-    }
-    else {
+    console.log('Geolocation is supported!');
+  }
+  else {
       console.log('Geolocation is not supported for this Browser/OS version yet.');
-    }
+  }
 
 
-=======
-}
-else {
-  console.log('Geolocation is not supported for this Browser/OS version yet.');
-}
-
-$(function() {
-  navigator.geolocation.getCurrentPosition(function(data) {console.log(data)}, function(error) {console.error(error)});
-});
->>>>>>> fd297ce1f2d057a6757bc4c42dda2e94f4237adb
-
-// window.onload = function() {
-//   var startPos;
-//   var geoSuccess = function(position) {
-//     startPos = position;
-//     debugger
-//     $('#startLat').innerHTML = startPos.coords.latitude;
-//     $('#startLon').innerHTML = startPos.coords.longitude;
-//   };
-//   navigator.geolocation.getCurrentPosition(geoSuccess);
-// };
-	// if i want to include a map
-	// function callback(results, status) {
-	//   if (status == google.maps.places.PlacesServiceStatus.OK) {
-	//     for (var i = 0; i < results.length; i++) {
-	//       var place = results[i];
-	//       createMarker(results[i]);
-	//     }
-	//   }
-	// }
