@@ -94,28 +94,22 @@ Internet Explorer, Opera < 12.1 */
     from { opacity: 0; }
     to   { opacity: 1; }
 }
-
+#ratingText{
+  font-size:24px;
+  //color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.5);
+  //margin-top:20px;
+}
 input[type=text]{
-  	/*border: 5px solid white; 
-    -webkit-box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    -moz-box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    box-shadow: 
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);*/ 
+  width:100%;
   padding: 15px;
   
   //background-color: transparent;
   margin: 0 0 10px 0;
   color: #FFFFFF;
-  font-size: 24px;
-	height: 35px;
+  font-size: 3.2em;
 	font-weight: 700;
 	color: #fff;
-	line-height: 35px;
 	background: none;
 	border: none;
 	border-radius: 0;
@@ -124,28 +118,70 @@ input[type=text]{
 	padding-left: 0;
 	position: relative;
 	z-index: 2;
-  width: 75%;
   float:left;
   -webkit-animation-duration: 1.5s; 
     animation-duration: 1.5s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 }
-.form-inline{
-  width:50%;
-}
-.form-group{
-  width:100%;
-}
-#question{
+#question,#question2{
 	color: #FFF;
-	font-size: 42px;
+	font-size: 3.5em;
 	padding: 20px;
    -webkit-animation-duration: 1.5s; 
     animation-duration: 1.5s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 
+}
+.button{
+  -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9) );
+  background:-moz-linear-gradient( center top, #f9f9f9 5%, #e9e9e9 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9');
+  background-color:#f9f9f9;
+  -webkit-border-top-left-radius:0px;
+  -moz-border-radius-topleft:0px;
+  border-top-left-radius:0px;
+  -webkit-border-top-right-radius:0px;
+  -moz-border-radius-topright:0px;
+  border-top-right-radius:0px;
+  -webkit-border-bottom-right-radius:0px;
+  -moz-border-radius-bottomright:0px;
+  border-bottom-right-radius:0px;
+  -webkit-border-bottom-left-radius:0px;
+  -moz-border-radius-bottomleft:0px;
+  border-bottom-left-radius:0px;
+  text-indent:0;
+  border:1px solid #dcdcdc;
+  display:inline-block;
+  color:#666666;
+  font-family:Arial;
+  font-size:2.5em;
+  margin:20px;
+  font-weight:bold;
+  font-style:normal;
+  height:100px;
+  line-height:100px;
+  width:131px;
+  text-decoration:none;
+  text-align:center;
+  text-shadow:1px 1px 0px #ffffff;
+}
+.button:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9) );
+  background:-moz-linear-gradient( center top, #e9e9e9 5%, #f9f9f9 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9');
+  background-color:#e9e9e9;
+}
+.button:active {
+  position:relative;
+  top:1px;
+}
+#locationQ, #locationForm{
+  display: none;
 }
 input::-webkit-input-placeholder {
    color: rgba(255, 255, 255, 0.5);
@@ -156,7 +192,7 @@ input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
 input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
 input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
 
-#submitBtn{
+.submitBtn{
   width:150px;
   margin-left:5px;
   font-size:1.25em;
