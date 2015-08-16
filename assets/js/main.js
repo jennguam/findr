@@ -82,41 +82,38 @@ var doSearch = function() {
         $('.resultRating').append('<span id="rating">'+data[i].rating+'</span><br>');
       }
       if (status === google.maps.places.PlacesServiceStatus.OK) {
+        var infowindow = new google.maps.InfoWindow();
         for (var i = 0; i < data.length; i++) {
-          //var position = new google.maps.LatLng(latitude[i],longitude[i]);
-          createMarker(data[i]);
-          
+          createMarker(data[i], infowindow);
         }
       }
     }
   };
-  
-  
 
-
-  //wrong instance of map??
-  var infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
 	service.textSearch(request, callback);
-console.log("COORDINATES"+coordinates);
+  console.log("COORDINATES"+coordinates);
 }
 
+var map;
+
 function initMap() {
-    var map = new google.maps.Map($('#map')[0], {
+    map = new google.maps.Map($('#map')[0], {
       center: {lat: 37.7833, lng: -122.4167},
       zoom: 15
     });
 }
 
-function createMarker(place) {
+function createMarker(place, infowindow) {
   //var myLatLng = {lat: place.geometry.location.G, lng: place.geometry.location.K};
   var positionLoc = new google.maps.LatLng(place.geometry.location.G,place.geometry.location.K);
   //console.log(myLatLng);
   var marker = new google.maps.Marker({
-    setMap: map,
     position: positionLoc,
     animation: google.maps.Animation.DROP
   });
+
+  marker.setMap(map);
 
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name);
