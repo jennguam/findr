@@ -1,3 +1,6 @@
+MAXIMUM_LOADING_TIME = 500;
+GMAPS_API_KEY = "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds";
+
 $(function() {
   setupHandlers();
   $("#eatInput").focus();
@@ -12,15 +15,14 @@ $(function() {
           type: "GET",
           data: {
             latlng: window.latitude + "," + window.longitude, 
-            sensor: true, 
-            key:"AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds"
+            key: GMAPS_API_KEY
           }
       }).then(
         function(data){
           window.locationValue = data.results[0].formatted_address;
-          if($('#loadingSpinner').is(':visible')) {
+          if(isLoading()) {
             $('#loadingSpinner').hide();
-            $('#question2').show();
+            $("#locationQ").show();
           }
           $('.city_name').text(data.results[1].address_components[0].long_name);
         }
@@ -32,13 +34,26 @@ $(function() {
   );
 });
 
+var isLoading = function() {
+  return $('#loadingSpinner').is(':visible')
+}
+
+var loadingSequence = function() {
+  $("#loadingSpinner").show();
+  setTimeout(function() {
+    $("#loadingSpinner").hide();
+    $("#locationQ2").show();
+    $("#locationQ2").prepend("<span class='question'>Oops! We couldn't find you.</span><br>");
+    $("#locationInput").focus();
+  }, MAXIMUM_LOADING_TIME);
+}
+
 var resolveEatSubmit = function() {
   $("#eatQ").hide();
-  $("#locationQ").show();
   if($(".city_name").is(':empty'))
-    $("#loadingSpinner").show();
+    loadingSequence();
   else
-    $("#question2").show();
+    $("#locationQ").show();
 }
 
 var resolveNoBtn = function() {
@@ -56,6 +71,23 @@ var resolveYesBtn = function() {
   $("#locationQ").hide();
 }
 
+var prepCustomLocation = function(address) {
+  window.locationValue = address;
+  return $.ajax({
+          url: "https://maps.googleapis.com/maps/api/geocode/json",
+          type: "GET",
+          data: {
+            address: address,
+            key: "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds"
+          }
+      }).then(
+        function(data){
+          window.latitude = data.results[0].geometry.location.lat;
+          window.longitude = data.results[0].geometry.location.lng;
+        }
+      );
+}
+
 var setupHandlers = function() {
   $("#eatForm").submit(function(e) {
     e.preventDefault();
@@ -67,9 +99,10 @@ var setupHandlers = function() {
   });
   $("#locationForm").submit(function(e) {
     e.preventDefault();
-    window.locationValue = $("#locationInput").val();
-    doSearch();
-    resolveLocationSubmit();
+    prepCustomLocation($("#locationInput").val()).then(function() {
+      doSearch();
+      resolveLocationSubmit();
+    });
   });
   $("#yesBtn").on("click", function(e) {
     doSearch();
@@ -78,17 +111,11 @@ var setupHandlers = function() {
 }
 
 var doSearch = function() {
-  if (window.latitude !== null && typeof window.latitude !== 'undefined')
-    var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
-  else {
-    $("#question2").html("Sorry! We can't seem to find your location.");
-    $("#locationInput").focus();
-    $("#map").hide();
-  }
+  var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
 
 	var request = {
     location: coordinates,
-		query: window.eatValue + " " + window.locationValue,
+		query: window.eatValue,
     radius: '500',
     types: ['restaurant']
 	};
@@ -104,7 +131,8 @@ var doSearch = function() {
     else {
       $('.resultName').html("");
       $('.resultRating').html("");
-      for (var i = 0; i < 10; i++) {
+      var dataCount = Math.min(data.length, 10)
+      for (var i = 0; i < dataCount; i++) {
         $('.resultName').append('<span id="name">'+data[i].name+'</span><br>');
         if(typeof data[i].rating !== "undefined" && data[i].rating !== null)
           rating = data[i].rating
@@ -114,7 +142,7 @@ var doSearch = function() {
       }
       var infowindow = new google.maps.InfoWindow();
       bounds = new google.maps.LatLngBounds();
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < dataCount; i++) {
         bounds.extend(createMarker(data[i], infowindow));
       }
       $("#map").show();
@@ -129,7 +157,7 @@ var doSearch = function() {
 }
 
 var map;
-var bounds
+var bounds;
 
 function initMap() {
     if (window.latitude !== null && typeof window.latitude !== 'undefined') {
@@ -147,7 +175,7 @@ function initMap() {
     });
 }
 
-var count = 0;
+var individualMarkerTimeout = 0;
 
 function createMarker(place, infowindow) {
   var positionLoc = new google.maps.LatLng(place.geometry.location.G,place.geometry.location.K);
@@ -160,7 +188,7 @@ function createMarker(place, infowindow) {
 
   setTimeout(function() {
     marker.setMap(map);
-  }, count += 100);
+  }, individualMarkerTimeout += 100);
 
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(place.name);
