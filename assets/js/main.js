@@ -17,7 +17,9 @@ $(function() {
           }
       }).then(
         function(data){
-          window.locationValue = data.results[1].formatted_address
+          window.locationValue = data.results[0].formatted_address;
+          // console.log(window.locationValue);
+          // console.log(data.results)
           $('.city_name').text(data.results[1].address_components[0].long_name);
         }
       );
@@ -40,6 +42,9 @@ var setupHandlers = function() {
   $("#noBtn").on("click", function(e) {
     $("#locationForm").show();
     $("#locationInput").focus();
+    $('#yesBtn').hide();
+    $('#noBtn').hide();
+
   });
   $("#locationForm").submit(function(e) {
     e.preventDefault();
@@ -49,6 +54,9 @@ var setupHandlers = function() {
   });
   $("#yesBtn").on("click", function(e) {
     doSearch();
+    $("#map").show();
+    $("#yesBtn").hide();
+    $("#noBtn").hide();
   });
 }
 
@@ -56,16 +64,16 @@ var doSearch = function() {
   if (window.latitude !== null && typeof window.latitude !== 'undefined')
     var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
   else 
-    console.error("we cant get user location.");
+   console.error("we cant get user location.");
 	var request = {
     location: coordinates,
 		query: window.eatValue + " " + window.locationValue,
     radius: '500',
     types: ['restaurant']
 	};
-  var callback = function(data) {
+  var callback = function(data, status) {
     if(data.length == 0)
-      console.error("we have no results from apiz")
+      console.error("we have no results from API");
     else {
       $('.resultName').html("");
       $('.resultRating').html("");
@@ -73,10 +81,45 @@ var doSearch = function() {
         $('.resultName').append('<span id="name">'+data[i].name+'</span><br>');
         $('.resultRating').append('<span id="rating">'+data[i].rating+'</span><br>');
       }
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < data.length; i++) {
+          //var position = new google.maps.LatLng(latitude[i],longitude[i]);
+          createMarker(data[i]);
+          
+        }
+      }
     }
   };
+  
+  
 
-  var map = new google.maps.Map(document.createElement('div'))
+
+  //wrong instance of map??
+  var infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
 	service.textSearch(request, callback);
+console.log("COORDINATES"+coordinates);
+}
+
+function initMap() {
+    var map = new google.maps.Map($('#map')[0], {
+      center: {lat: 37.7833, lng: -122.4167},
+      zoom: 15
+    });
+}
+
+function createMarker(place) {
+  //var myLatLng = {lat: place.geometry.location.G, lng: place.geometry.location.K};
+  var positionLoc = new google.maps.LatLng(place.geometry.location.G,place.geometry.location.K);
+  //console.log(myLatLng);
+  var marker = new google.maps.Marker({
+    setMap: map,
+    position: positionLoc,
+    animation: google.maps.Animation.DROP
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
 }
