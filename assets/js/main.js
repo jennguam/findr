@@ -32,39 +32,48 @@ $(function() {
   );
 });
 
+var resolveEatSubmit = function() {
+  $("#eatQ").hide();
+  $("#locationQ").show();
+  if($(".city_name").is(':empty'))
+    $("#loadingSpinner").show();
+  else
+    $("#question2").show();
+}
+
+var resolveNoBtn = function() {
+  $("#locationQ").hide();
+  $("#locationQ2").show();
+  $("#locationInput").focus();
+}
+
+var resolveLocationSubmit = function() {
+  $("#locationQ2").hide();
+  $("#locationForm").hide();
+}
+
+var resolveYesBtn = function() {
+  $("#locationQ").hide();
+}
 
 var setupHandlers = function() {
   $("#eatForm").submit(function(e) {
     e.preventDefault();
     window.eatValue = $("#eatInput").val();
-    $("#eatForm").hide();
-    $("#question").hide();
-    $("#locationQ").show();
-    if($(".city_name").is(':empty'))
-      $("#loadingSpinner").show();
-    else
-      $("#question2").show();
+    resolveEatSubmit();
   });
   $("#noBtn").on("click", function(e) {
-    $("#locationQ").hide();
-    $("#locationQ2").show();
-    $("#locationForm").show();
-    $("#locationInput").focus();
-    $('#yesBtn').hide();
-    $('#noBtn').hide();
+    resolveNoBtn();
   });
   $("#locationForm").submit(function(e) {
     e.preventDefault();
     window.locationValue = $("#locationInput").val();
     doSearch();
-    $("#locationQ2").hide();
-    $("#locationForm").hide();
+    resolveLocationSubmit();
   });
   $("#yesBtn").on("click", function(e) {
     doSearch();
-    $("#yesBtn").hide();
-    $("#noBtn").hide();
-    $("#question2").hide();
+    resolveYesBtn();
   });
 }
 
