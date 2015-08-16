@@ -55,8 +55,10 @@ var setupHandlers = function() {
   $("#yesBtn").on("click", function(e) {
     doSearch();
     $("#map").show();
+    google.maps.event.trigger(map, 'resize');
     $("#yesBtn").hide();
     $("#noBtn").hide();
+    $("#question2").hide();
   });
 }
 
@@ -64,6 +66,10 @@ var doSearch = function() {
   if (window.latitude !== null && typeof window.latitude !== 'undefined')
     var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
   else 
+    $("#question2").html("Sorry! We can't seem to find your location.");
+    $("#locationInput").focus();
+    $("#map").hide();
+
    console.error("we cant get user location.");
 	var request = {
     location: coordinates,
@@ -83,9 +89,11 @@ var doSearch = function() {
       }
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         var infowindow = new google.maps.InfoWindow();
-        for (var i = 0; i < data.length; i++) {
-          createMarker(data[i], infowindow);
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < 10; i++) {
+          bounds.extend(createMarker(data[i], infowindow));
         }
+        map.fitBounds(bounds);
       }
     }
   };
@@ -107,10 +115,11 @@ function initMap() {
 function createMarker(place, infowindow) {
   //var myLatLng = {lat: place.geometry.location.G, lng: place.geometry.location.K};
   var positionLoc = new google.maps.LatLng(place.geometry.location.G,place.geometry.location.K);
-  //console.log(myLatLng);
+  
   var marker = new google.maps.Marker({
     position: positionLoc,
-    animation: google.maps.Animation.DROP
+    animation: google.maps.Animation.DROP,
+    title: place.name
   });
 
   marker.setMap(map);
@@ -119,4 +128,6 @@ function createMarker(place, infowindow) {
     infowindow.setContent(place.name);
     infowindow.open(map, this);
   });
+
+  return positionLoc;
 }

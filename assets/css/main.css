@@ -5,21 +5,19 @@
 body {
 	background-color: #12A2C0 !important;
 }
-.well{
-	margin: 0 auto;
-}
 .resultName,.resultRating{
 	text-align: left;
-	font-size: 24px;
+	font-size: 2.5em;
 	font-family: 'Source Sans Pro', Helvetica, Arial;
 	color: #FFFFFF;
  
 }
 #map{
-  width:500px;
-  height:500px;
-  
+  width:1000px;
+  height:1000px;
+  display:none;
 }
+
 @-webkit-keyframes fadeIn { 
     0% {opacity: 0;} 
     100% {opacity: 1;} 
