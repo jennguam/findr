@@ -126,7 +126,7 @@ input[type=text]{
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 }
-#question,#question2{
+#question,#question2,#question3{
 	color: #FFF;
 	font-size: 3.5em;
 	padding: 20px;
@@ -134,7 +134,9 @@ input[type=text]{
     animation-duration: 1.5s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
-
+}
+#question2 {
+  display: none;
 }
 .button{
   -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -183,7 +185,7 @@ input[type=text]{
   position:relative;
   top:1px;
 }
-#locationQ, #locationForm{
+#locationQ, #locationQ2, #locationForm{
   display: none;
 }
 input::-webkit-input-placeholder {
@@ -203,4 +205,53 @@ input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
     animation-duration: 1s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
+}
+
+#loadingSpinner {
+  display: none;
+  text-align: center;
+}
+
+.spinner {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: solid 30px;
+  border-radius: 5em;
+  border-color: white transparent white transparent;
+  animation: spin 1s linear infinite;
+}
+
+.dot{
+  &:before,
+  &:after{
+    content: ".";
+  }
+  
+  &{
+    animation: fade 1s linear infinite;
+  }
+  
+  &:after{
+    animation: fade 2s linear infinite;
+  }
+}
+
+@keyframes spin{
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade{
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

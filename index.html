@@ -23,18 +23,22 @@
   						<h2 id="question" class="fadeInDown">What would you like to eat?</h2><br>
   						<form id="eatForm" class="form-inline">
   					     <input type="text" id="eatInput" class="fadeIn">
-  					     <!--<button type="submit" id="eatSubmit" class="btn btn-default submitBtn fadeIn">Submit Eats</button>-->
               </form>
             </div>
+
             <div id="locationQ">
+              <div id="loadingSpinner"><div class="spinner"></div></div>
               <h2 id="question2" class="fadeInDown">It looks like you're in <span class="city_name"></span>. Would you like to search in this location? </h2>
               <button id="yesBtn" class="button fadeIn">Yes</button>
               <button id="noBtn" class="button fadeIn">No</button>
             </div>
+            <div id="locationQ2">
+              <h2 id="question3" class="fadeInDown">Where would you like to search?! </h2>
+            </div>
             <form id="locationForm" class="form-inline">
                <input type="text" id="locationInput" class=" fadeIn">
             </form>
-           
+
               <div id="map"></div>
            
               <div class="results col-xs-6">
