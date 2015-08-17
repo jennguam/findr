@@ -5,15 +5,30 @@
 body {
 	background-color: #12A2C0 !important;
 }
-.resultName,.resultRating{
+.eachResult{
+  display:none;
+}
+.resultName_0,
+.resultName_1,
+.resultName_2,
+.resultName_3,
+.resultName_4,
+.resultName_5,
+.resultRating_0,
+.resultRating_1,
+.resultRating_2,
+.resultRating_3,
+.resultRating_4,
+.resultRating_5
+{
 	text-align: left;
-	font-size: 2.5em;
+	font-size: 2em;
 	font-family: 'Source Sans Pro', Helvetica, Arial;
-	color: #FFFFFF;
+	color: #333;
  
 }
 #map{
-  width:1000px;
+  width:700px;
   height:1000px;
   display:none;
 }

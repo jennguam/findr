@@ -88,6 +88,19 @@ var prepCustomLocation = function(address) {
       );
 }
 
+var getPhoto = function(photoRef) {
+  window.locationValue = address;
+  return $.ajax({
+          url: "https://maps.googleapis.com/maps/api/place/photo",
+          type: "GET",
+          data: {
+            photoreference: photoRef,
+            key: "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds",
+            maxwidth:400
+          }
+      });
+}
+
 var setupHandlers = function() {
   $("#eatForm").submit(function(e) {
     e.preventDefault();
@@ -117,11 +130,12 @@ var doSearch = function() {
     location: coordinates,
 		query: window.eatValue,
     radius: '500',
-    types: ['restaurant']
+    types: ['restaurant','food']
 	};
   var callback = function(data, status) {
     if (status !== google.maps.places.PlacesServiceStatus.OK) {
       console.error("google api failed with status " + status);
+      //PRINT OUT 0 RESULTS AND ADD TRY AGAIN BUTTON
       return;
     }
     if(data.length == 0) {
@@ -129,16 +143,19 @@ var doSearch = function() {
       return;
     }
     else {
+      $('.eachResult').show();
+      console.log(data);
       $('.resultName').html("");
       $('.resultRating').html("");
       var dataCount = Math.min(data.length, 10)
       for (var i = 0; i < dataCount; i++) {
-        $('.resultName').append('<span id="name">'+data[i].name+'</span><br>');
+        $('.resultName_'+i).append('<span id="name">'+data[i].name+'</span><br>');
+        console.log(data[i].photos);
         if(typeof data[i].rating !== "undefined" && data[i].rating !== null)
           rating = data[i].rating
         else
           rating = "----"
-        $('.resultRating').append('<span id="rating">'+rating+'</span><br>');
+        $('.resultRating_'+i).append('<span id="rating">'+rating+'</span><br>');
       }
       var infowindow = new google.maps.InfoWindow();
       bounds = new google.maps.LatLngBounds();
