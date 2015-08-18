@@ -147,15 +147,33 @@ var doSearch = function() {
       console.log(data);
       $('.resultName').html("");
       $('.resultRating').html("");
-      var dataCount = Math.min(data.length, 10)
+      var dataCount = Math.min(data.length, 6)
       for (var i = 0; i < dataCount; i++) {
         $('.resultName_'+i).append('<span id="name">'+data[i].name+'</span><br>');
-        console.log(data[i].photos);
+        $('.resultAddress_'+i).append('<span id="address">'+data[i].formatted_address+'</span><br>');
+        //console.log(data[i].photos);
         if(typeof data[i].rating !== "undefined" && data[i].rating !== null)
           rating = data[i].rating
         else
           rating = "----"
         $('.resultRating_'+i).append('<span id="rating">'+rating+'</span><br>');
+        switch(data[i].price_level) {
+            case 1:
+                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i></span><br>');
+                break;
+            case 2:
+                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i><i class="fa fa-usd"></i></span><br>');
+                break;
+            case 3:
+                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i></span><br>');
+                break;
+            case 4:
+                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i></span><br>');
+                break;
+            default:
+                $('.resultPrice_'+i).append('<span id="price_level">-</span><br>');
+        }
+
       }
       var infowindow = new google.maps.InfoWindow();
       bounds = new google.maps.LatLngBounds();
