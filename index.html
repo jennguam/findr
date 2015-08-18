@@ -17,8 +17,12 @@
 				<!-- Nav -->
 				<div class="col-xs-12">
 				<!-- Main -->
+        <div class="col-xs-10 tryAgainContainer">
+         <a class="hvr-icon-spin tryagain" href="./"><span class="tryagain">Try Again </span></a>
+        </div
 				<div class="col-xs-12 textcenter">
 					<div class=" col-xs-12 text-center mainBox">
+
 						<div id="eatQ">
   						<h2 class="question fadeInDown">What would you like to eat?</h2><br>
   						<form id="eatForm" class="form-inline">
@@ -41,6 +45,10 @@
               <form id="locationForm" class="form-inline">
                  <input type="text" id="locationInput" class=" fadeIn">
               </form>
+            </div>
+            <div id="noResults">
+              <h2 class="question fadeInDown">There seems to be no results! Perhaps you were too specific?</h2><br>
+              <a href="./"><button id="tryagainBtn" class="button fadeIn hvr-icon-spin">Try Again<br></button></a>
             </div>
             <div class="col-xs-12">
               <div class="results col-xs-5">
@@ -124,9 +132,10 @@
               
               <div id="startLat"></div>
               <div id="startLon"></div>
+
 					</div>
 								 
-								  
+						 
 								
 						
 

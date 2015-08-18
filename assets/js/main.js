@@ -135,7 +135,7 @@ var doSearch = function() {
   var callback = function(data, status) {
     if (status !== google.maps.places.PlacesServiceStatus.OK) {
       console.error("google api failed with status " + status);
-      //PRINT OUT 0 RESULTS AND ADD TRY AGAIN BUTTON
+      $("#noResults").show();
       return;
     }
     if(data.length == 0) {
@@ -173,6 +173,8 @@ var doSearch = function() {
             default:
                 $('.resultPrice_'+i).append('<span id="price_level">-</span><br>');
         }
+        $('.tryagain').show();
+        $('.hvr-icon-spin').show();
 
       }
       var infowindow = new google.maps.InfoWindow();
