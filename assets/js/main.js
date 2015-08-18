@@ -161,16 +161,16 @@ var doSearch = function() {
         $('.resultRating_'+i).append('<span id="rating">'+rating+'</span><br>');
         switch(data[i].price_level) {
             case 1:
-                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i></span><br>');
+                $('.resultPrice_'+i).append('<span id="price_level">&#36;</span><br>');
                 break;
             case 2:
-                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i><i class="fa fa-usd"></i></span><br>');
+                $('.resultPrice_'+i).append('<span id="price_level">&#36;&#36;</i></span><br>');
                 break;
             case 3:
-                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i></span><br>');
+                $('.resultPrice_'+i).append('<span id="price_level">&#36;&#36;&#36;</i></span><br>');
                 break;
             case 4:
-                $('.resultPrice_'+i).append('<span id="price_level"><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i></span><br>');
+                $('.resultPrice_'+i).append('<span id="price_level">&#36;&#36;&#36;&#36;<br>');
                 break;
             default:
                 $('.resultPrice_'+i).append('<span id="price_level">-</span><br>');
