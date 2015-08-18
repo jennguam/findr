@@ -1,4 +1,4 @@
-MAXIMUM_LOADING_TIME = 500;
+MAXIMUM_LOADING_TIME = 5000;
 GMAPS_API_KEY = "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds";
 
 $(function() {
@@ -41,10 +41,12 @@ var isLoading = function() {
 var loadingSequence = function() {
   $("#loadingSpinner").show();
   setTimeout(function() {
-    $("#loadingSpinner").hide();
-    $("#locationQ2").show();
-    $("#locationQ2").prepend("<span class='question'>Oops! We couldn't find you.</span><br>");
-    $("#locationInput").focus();
+    if(isLoading()) {
+      $("#loadingSpinner").hide();
+      $("#locationQ2").show();
+      $("#locationQ2").prepend("<span class='question'>Oops! We couldn't find you.</span><br>");
+      $("#locationInput").focus();
+    }
   }, MAXIMUM_LOADING_TIME);
 }
 
@@ -178,7 +180,7 @@ var doSearch = function() {
 
       }
       var infowindow = new google.maps.InfoWindow();
-      bounds = new google.maps.LatLngBounds();
+      var bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < dataCount; i++) {
         bounds.extend(createMarker(data[i], infowindow));
       }
@@ -194,7 +196,6 @@ var doSearch = function() {
 }
 
 var map;
-var bounds;
 
 function initMap() {
     if (window.latitude !== null && typeof window.latitude !== 'undefined') {

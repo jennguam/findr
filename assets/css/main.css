@@ -102,7 +102,8 @@ body {
 }
 #map{
   width:1200px;
-  height:1500px;
+  height:1494px;
+  border-radius: 4px;
   display:none;
 }
 
@@ -148,7 +149,6 @@ body {
 
 .results{
   text-align: left;
-  margin-top: 10px;
 }
 
 #locationBox{
