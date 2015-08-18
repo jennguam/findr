@@ -4,13 +4,13 @@ body {
 	background-color: #12A2C0 !important;
 }
 /* Result Page */
-.eachResult, #noResults{
+.eachResult, #noResults {
   display:none;
 }
-.resultImg{
+.resultImg {
   margin-top:15px;
 }
-.price{
+.price {
   text-align: left;
   font-size: 1.5em;
   font-family: 'Source Sans Pro', Helvetica, Arial;
@@ -30,21 +30,24 @@ body {
   color: #333;
  
 }
-.rating
-{
+#rating {
+  background-color: #D3D3D3;
+  border-radius: 12px;
+  padding: 8px;
+}
+.rating {
   margin: 15px 0 15px 0;
   text-align: left;
   font-size: 2em;
   font-family: 'Source Sans Pro', Helvetica, Arial;
   color: #333;
- 
 }
 
 .results {
   text-align: left;
 }
 
-#map{
+#map {
   width:1200px;
   height:1494px;
   border-radius: 4px;
@@ -52,12 +55,12 @@ body {
 }
 
 /*Try Again*/
-.tryAgainContainer{
+.tryAgainContainer {
   color:#FFFFFF;
   font-size: 1.25em;
   margin: 20px 0 0 25px;
 }
-.tryagain:hover{
+.tryagain:hover {
   text-decoration:none !important;
   
 }
@@ -103,6 +106,10 @@ body {
 
 
 /* CSS Animations */
+.fadeIn { 
+    -webkit-animation-name: fadeIn; 
+    animation-name: fadeIn; 
+}
 
 @-webkit-keyframes fadeIn { 
     0% {opacity: 0;} 
@@ -112,9 +119,10 @@ body {
     0% {opacity: 0;} 
     100% {opacity: 1;} 
 } 
-.fadeIn { 
-    -webkit-animation-name: fadeIn; 
-    animation-name: fadeIn; 
+
+.fadeInDown { 
+    -webkit-animation-name: fadeInDown; 
+    animation-name: fadeInDown; 
 }
 
 @-webkit-keyframes fadeInDown { 
@@ -139,30 +147,7 @@ body {
     } 
 } 
 
-.fadeInDown { 
-    -webkit-animation-name: fadeInDown; 
-    animation-name: fadeInDown; 
-}
 
-
-.mainBox{
-  margin: 0 auto;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  resize: both;
-  height: 800px;
-  -webkit-flex-direction: column; /* Safari */
-  flex-direction: column;
-
-  width: 200px;
-  visibility: visible;
-  animation-delay: 300ms;
-  -webkit-animation-delay: 300ms;
-  animation-name: fadeIn;
-  -webkit-animation-name: fadeIn;
-}
 
 /* Firefox < 16, Safari, Chrome and Opera > 12.1, 
 Internet Explorer, Opera < 12.1 */
@@ -233,7 +218,26 @@ Internet Explorer, Opera < 12.1 */
 }
 
 /* Forms and Questions */
-input[type=text]{
+.mainBox{
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  resize: both;
+  height: 800px;
+  -webkit-flex-direction: column; /* Safari */
+  flex-direction: column;
+
+  width: 200px;
+  visibility: visible;
+  animation-delay: 300ms;
+  -webkit-animation-delay: 300ms;
+  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
+}
+
+input[type=text] {
   width:100%;
   padding: 15px;
   margin: 0 0 10px 0;
@@ -264,7 +268,7 @@ input[type=text]{
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 }
-.button{
+.button {
   -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
   -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
   box-shadow:inset 0px 1px 0px 0px #ffffff;
