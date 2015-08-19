@@ -115,18 +115,6 @@ var setupHandlers = function() {
   });
 }
 
-var getPlaceUrl = function(placeid) {
-  return $.ajax({
-    url: "https://maps.googleapis.com/maps/api/place/details",
-    type: "GET",
-    dataType: 'jsonp',
-    cache: 'false',
-    data: {
-      placeid: placeid,
-      key: GMAPS_API_KEY
-    }
-  });
-}
 
 var doSearch = function() {
   var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
