@@ -2,7 +2,7 @@ MAXIMUM_LOADING_TIME = 5000;
 MAXIMUM_RESULTS = 6;
 GMAPS_API_KEY = "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds";
 DEFAULT_PHOTO_URL = "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png?height=190&width=190"
-MAX_PHOTO_WIDTH = 190;
+MAX_PHOTO_WIDTH = 180;
 MAX_PHOTO_HEIGHT = 175;
 
 $(function() {
@@ -149,7 +149,7 @@ var doSearch = function() {
           var photoUrl = DEFAULT_PHOTO_URL;
         singleResult.find('.resultImageContainer').append('<img class="resultImage hidden-md" src='+photoUrl+'>');
         var rating = data[i].rating || "----";
-        singleResult.find('.resultRating').append('<span id="rating">'+rating+'</span><br>');
+        singleResult.find('.resultRating').append('<span id="ratingContainer">'+rating+'</span><br>');
         var dollarSigns = getDollarSigns(data[i].price_level);
         singleResult.find('.resultPrice').append('<span id="price_level">'+dollarSigns+'</span><br>');
         $('.results').append(singleResult);
