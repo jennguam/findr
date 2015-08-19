@@ -8,7 +8,7 @@ MAX_PHOTO_HEIGHT = 175;
 $(function() {
   setupHandlers();
   $("#eatInput").focus();
-
+  //Grab window geolocation
   navigator.geolocation.getCurrentPosition(
     function(data) {
       window.latitude = data.coords.latitude;
@@ -76,6 +76,7 @@ var resolveYesBtn = function() {
   $("#locationQ").hide();
 }
 
+//Handles if user wants to put in a different location
 var prepCustomLocation = function(address) {
   window.locationValue = address;
   return $.ajax({
@@ -115,7 +116,7 @@ var setupHandlers = function() {
   });
 }
 
-
+//Using Google Places API to display results
 var doSearch = function() {
   var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
   var service = new google.maps.places.PlacesService(map);
@@ -217,7 +218,8 @@ var getDollarSigns = function(price_level) {
     dollarSigns += "&#36";
   return dollarSigns || "--";
 }
-  
+
+// Dynamically creates HTML for each result  
 var getSingleResult = function(){
   return '<div class="eachResult col-xs-12 well">' +
            '<div class="col-xs-3 hidden-xs">' +
