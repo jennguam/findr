@@ -1,5 +1,9 @@
 MAXIMUM_LOADING_TIME = 5000;
+MAXIMUM_RESULTS = 6;
 GMAPS_API_KEY = "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds";
+DEFAULT_PHOTO_URL = "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png?height=190&width=190"
+MAX_PHOTO_WIDTH = 190;
+MAX_PHOTO_HEIGHT = 175;
 
 $(function() {
   setupHandlers();
@@ -65,8 +69,7 @@ var resolveNoBtn = function() {
 }
 
 var resolveLocationSubmit = function() {
-  $("#locationQ2").hide();
-  $("#locationForm").hide();
+  $("#locationQ2, #locationForm").hide();
 }
 
 var resolveYesBtn = function() {
@@ -80,7 +83,7 @@ var prepCustomLocation = function(address) {
           type: "GET",
           data: {
             address: address,
-            key: "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds"
+            key: GMAPS_API_KEY
           }
       }).then(
         function(data){
@@ -88,19 +91,6 @@ var prepCustomLocation = function(address) {
           window.longitude = data.results[0].geometry.location.lng;
         }
       );
-}
-
-var getPhoto = function(photoRef) {
-  window.locationValue = address;
-  return $.ajax({
-          url: "https://maps.googleapis.com/maps/api/place/photo",
-          type: "GET",
-          data: {
-            photoreference: photoRef,
-            key: "AIzaSyDZymPd6_9qWy_mhMnZvmU_-SEw5cj2jds",
-            maxwidth:400
-          }
-      });
 }
 
 var setupHandlers = function() {
@@ -125,8 +115,22 @@ var setupHandlers = function() {
   });
 }
 
+var getPlaceUrl = function(placeid) {
+  return $.ajax({
+    url: "https://maps.googleapis.com/maps/api/place/details",
+    type: "GET",
+    dataType: 'jsonp',
+    cache: 'false',
+    data: {
+      placeid: placeid,
+      key: GMAPS_API_KEY
+    }
+  });
+}
+
 var doSearch = function() {
   var coordinates = new google.maps.LatLng(window.latitude, window.longitude);
+  var service = new google.maps.places.PlacesService(map);
 
 	var request = {
     location: coordinates,
@@ -145,40 +149,24 @@ var doSearch = function() {
       return;
     }
     else {
-      $('.eachResult').show();
-      console.log(data);
-      $('.resultName').html("");
-      $('.resultRating').html("");
-      var dataCount = Math.min(data.length, 6)
+      $('.results').html("");
+      var dataCount = Math.min(data.length, MAXIMUM_RESULTS);
       for (var i = 0; i < dataCount; i++) {
-        $('.resultName_'+i).append('<span id="name">'+data[i].name+'</span><br>');
-        $('.resultAddress_'+i).append('<span id="address">'+data[i].formatted_address+'</span><br>');
-        //console.log(data[i].photos);
-        if(typeof data[i].rating !== "undefined" && data[i].rating !== null)
-          rating = data[i].rating
+        singleResult = $(getSingleResult());
+        singleResult.find('.resultName').append('<span id="name">'+data[i].name+'</span><br>');
+        singleResult.find('.resultAddress').append('<span id="address">'+data[i].formatted_address+'</span><br>');
+        if(data[i].photos)
+          var photoUrl = data[i].photos[0].getUrl({maxWidth: MAX_PHOTO_WIDTH, maxHeight: MAX_PHOTO_HEIGHT});
         else
-          rating = "----"
-        $('.resultRating_'+i).append('<span id="rating">'+rating+'</span><br>');
-        switch(data[i].price_level) {
-            case 1:
-                $('.resultPrice_'+i).append('<span id="price_level">&#36;</span><br>');
-                break;
-            case 2:
-                $('.resultPrice_'+i).append('<span id="price_level">&#36;&#36;</i></span><br>');
-                break;
-            case 3:
-                $('.resultPrice_'+i).append('<span id="price_level">&#36;&#36;&#36;</i></span><br>');
-                break;
-            case 4:
-                $('.resultPrice_'+i).append('<span id="price_level">&#36;&#36;&#36;&#36;<br>');
-                break;
-            default:
-                $('.resultPrice_'+i).append('<span id="price_level">-</span><br>');
-        }
-        $('.tryagain').show();
-        $('.hvr-icon-spin').show();
-
+          var photoUrl = DEFAULT_PHOTO_URL;
+        singleResult.find('.resultImageContainer').append('<img class="resultImage hidden-md" src='+photoUrl+'>');
+        var rating = data[i].rating || "----";
+        singleResult.find('.resultRating').append('<span id="rating">'+rating+'</span><br>');
+        var dollarSigns = getDollarSigns(data[i].price_level);
+        singleResult.find('.resultPrice').append('<span id="price_level">'+dollarSigns+'</span><br>');
+        $('.results').append(singleResult);
       }
+      $('.eachResult, .tryagain, .hvr-icon-spin').show();
       var infowindow = new google.maps.InfoWindow();
       var bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < dataCount; i++) {
@@ -191,7 +179,6 @@ var doSearch = function() {
     }
   };
 
-  var service = new google.maps.places.PlacesService(map);
 	service.textSearch(request, callback);
 }
 
@@ -234,4 +221,25 @@ function createMarker(place, infowindow) {
   });
 
   return positionLoc;
+}
+
+var getDollarSigns = function(price_level) {
+  var dollarSigns = "";
+  for(var i=0; i<price_level; i++)
+    dollarSigns += "&#36";
+  return dollarSigns || "--";
+}
+  
+var getSingleResult = function(){
+  return '<div class="eachResult col-xs-12 well">' +
+           '<div class="col-xs-3 hidden-xs">' +
+             '<div class="resultImageContainer text-center"></div>' +
+           '</div>' +
+           '<div class="col-xs-9">' +
+             '<div class="resultName resultname fadeIn"></div> ' +
+             '<div class="resultAddress address fadeIn"></div>' +              
+             '<div class="resultPrice price fadeIn"></div>' +
+             '<div class="resultRating rating fadeIn"></div>' 
+           '</div>' +
+          '</div>'
 }

@@ -7,7 +7,7 @@ body {
 .eachResult, #noResults {
   display:none;
 }
-.resultImg {
+.resultImageContainer {
   margin-top:15px;
 }
 .price {
@@ -15,10 +15,10 @@ body {
   font-size: 1.5em;
   font-family: 'Source Sans Pro', Helvetica, Arial;
   color: green;
-  margin: 15px 0 15px 0;
+  margin: 15px 0;
 }
 .address{
-  margin: 5px 0 15px 0;
+  margin: 5px 0 15px;
   font-size: 1.25em;
 }
 .resultname
